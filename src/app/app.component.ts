@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { HttpClient } from '../../node_modules/@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -9,12 +10,21 @@ import * as moment from 'moment';
 export class AppComponent implements OnInit {
   date: string;
 
-  constructor() {
-  } 
+  constructor(private http: HttpClient) {
+  }
 
   ngOnInit(): void {
-    let myDate: string = "2018-07-21 16:01:09 +0";
 
-    this.date = moment(myDate).toLocaleString();
   }
+
+  buttonTest(eventDate: any): void {
+    let obs = this.http.get("https://slack.com/api/api.test")
+      .subscribe((data: Test) => {
+        console.log(data.ok);
+      });
+  }
+}
+
+class Test {
+  public ok: string;
 }
